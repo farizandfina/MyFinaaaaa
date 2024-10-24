@@ -17,16 +17,37 @@
 
 <body>
 
-  <audio id="myAudio" src="YouAreMyEverything.mp3" autoplay muted></audio>
+  <audio id="myAudio" src="YouAreMyEverything.mp3"></audio>
 
+  <!-- Tombol untuk memulai audio jika autoplay gagal -->
+  <button id="playButton" style="display:none;">Putar Audio</button>
+  
   <script type="text/javascript">
-      // Attempt to autoplay the audio by unmuting it after play starts
-      document.getElementById("myAudio").play().then(() => {
-          document.getElementById("myAudio").muted = false;
-      }).catch(error => {
-          console.log('Autoplay failed, audio will not play automatically:', error);
+      // Mencoba autoplay
+      const audio = document.getElementById("myAudio");
+      const playButton = document.getElementById("playButton");
+  
+      function playAudio() {
+          audio.play().then(() => {
+              console.log('Autoplay berhasil');
+          }).catch(error => {
+              console.log('Autoplay gagal, memunculkan tombol play:', error);
+              playButton.style.display = "block";  // Tampilkan tombol play jika autoplay gagal
+          });
+      }
+  
+      // Menjalankan fungsi play saat halaman selesai dimuat
+      window.onload = function() {
+          playAudio();
+      };
+  
+      // Menambahkan event listener untuk memutar audio ketika tombol diklik
+      playButton.addEventListener('click', function() {
+          audio.play();
+          playButton.style.display = "none";  // Sembunyikan tombol setelah audio diputar
       });
   </script>
+  
 
   <section id="four-oh-four">
   <img class="bg"/>
